@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+  pg:
+    image: postgres:13
+    restart: "always"
+    environment:
+      POSTGRES_DB: stack-on-fire/drills
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret
+    ports:
+      - "4141:5432"
+    volumes:
+      - ./db:/var/lib/postgresql/data
