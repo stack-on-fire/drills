@@ -75,6 +75,7 @@ const drill = {
   functionName: "powerOfTwoArrayNumbers",
   language: "js",
   starterCode: `
+  // Iterate over array of numbers and put every number to the power of two. 
   const powerOfTwoArrayNumbers = (array) => {
     // your code goes here. Good luck 🍀
   };
