@@ -52,23 +52,40 @@ const Home: NextPage = () => {
   );
 };
 
-const drill = {
-  functionName: "doubleNumber",
-  language: "js",
-  starterCode: `// const number = 1
+// const drill = {
+//   functionName: "doubleNumber",
+//   language: "js",
+//   starterCode: `
+//   const doubleNumber = (number) => {
+//     // your code goes here. Good luck 🍀
+//   };
 
-  const doubleNumber = (number) => {
+//   export default doubleNumber;`,
+//   testCases: [
+//     { input: 1, output: 2 },
+//     { input: 4, output: 8 },
+//   ],
+//   hints: [
+//     "To write this function you need to use the `*` operator of JavaScript",
+//     "The return statement should look like `return number * 2;`",
+//   ],
+// };
+const drill = {
+  functionName: "powerOfTwoArrayNumbers",
+  language: "js",
+  starterCode: `
+  const powerOfTwoArrayNumbers = (array) => {
     // your code goes here. Good luck 🍀
   };
   
-  export default doubleNumber;`,
+  export default powerOfTwoArrayNumbers;`,
   testCases: [
-    { input: 1, output: 2 },
-    { input: 4, output: 8 },
+    { input: [1, 2, 3], output: [1, 4, 9] },
+    { input: [10, 2, 8], output: [100, 4, 64] },
   ],
   hints: [
-    "To write this function you need to use the `*` operator of JavaScript",
-    "The return statement should look like `return number * 2;`",
+    "To write this function you need to use the `**` operator of JavaScript",
+    "The return statement should look like `return number ** 2;`",
   ],
 };
 
