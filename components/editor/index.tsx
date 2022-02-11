@@ -73,7 +73,7 @@ const Prettier = () => {
   });
 
   return (
-    <Button colorScheme="green" onClick={() => runPrettier()}>
+    <Button size="sm" colorScheme="green" onClick={() => runPrettier()}>
       Prettify code
     </Button>
   );
@@ -180,6 +180,7 @@ export const Editor = ({ drill, visibleHints, setVisibleHints }: Props) => {
         <HStack mb={2}>
           <Prettier />
           <Button
+            size="sm"
             colorScheme="purple"
             onClick={() => {
               if (visibleHints === drill.hints.length) {
@@ -190,6 +191,9 @@ export const Editor = ({ drill, visibleHints, setVisibleHints }: Props) => {
             }}
           >
             {visibleHints === drill.hints.length ? "Hide hints" : "Show hint"}
+          </Button>
+          <Button size="sm" colorScheme="blue">
+            Submit
           </Button>
         </HStack>
 
