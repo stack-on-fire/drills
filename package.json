@@ -12,6 +12,7 @@
     "prisma:seed": "npx prisma db seed"
   },
   "dependencies": {
+    "@chakra-ui/icons": "^1.1.5",
     "@chakra-ui/react": "^1.8.3",
     "@codemirror/autocomplete": "^0.19.12",
     "@codesandbox/sandpack-react": "^0.13.14",

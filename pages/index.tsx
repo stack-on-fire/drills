@@ -4,9 +4,11 @@ import Head from "next/head";
 import { Editor } from "components/editor";
 import Hints from "components/hints";
 import { useState } from "react";
+import { Navbar } from "components/navbar";
 
 const Home: NextPage = () => {
   const [visibleHints, setVisibleHints] = useState(0);
+
   return (
     <div>
       <Head>
@@ -16,7 +18,8 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
-        <Flex h="100vh" w="100%" alignItems="center" justifyContent="center">
+        <Navbar />
+        <Flex mt={8} alignItems="center" justifyContent="center">
           <Center>
             <VStack>
               <Heading color="primary-text">⚡️Drills⚡️</Heading>
