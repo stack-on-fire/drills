@@ -1,4 +1,4 @@
-import { Box, Button, Center } from "@chakra-ui/react";
+import { Box, Button, Center, HStack } from "@chakra-ui/react";
 import {
   SandpackProvider,
   SandpackCodeEditor,
@@ -11,15 +11,22 @@ import "@codesandbox/sandpack-react/dist/index.css";
 import { isEqual } from "lodash";
 import prettier from "prettier";
 import parserBabel from "prettier/parser-babel";
-import { useCallback, useEffect, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import dynamic from "next/dynamic";
 
-type Drill = {
+export type Drill = {
   functionName: string;
   language: string;
   starterCode: string;
   testCases: ReadonlyArray<TestCase>;
+  hints: ReadonlyArray<string>;
 };
 
 type TestCase = {
@@ -29,6 +36,8 @@ type TestCase = {
 
 type Props = {
   drill: Drill;
+  setVisibleHints: Dispatch<SetStateAction<number>>;
+  visibleHints: number;
 };
 
 const Console = dynamic(() => import("../console/index"), { ssr: false });
@@ -64,7 +73,7 @@ const Prettier = () => {
   });
 
   return (
-    <Button mb={2} colorScheme="green" onClick={() => runPrettier()}>
+    <Button colorScheme="green" onClick={() => runPrettier()}>
       Prettify code
     </Button>
   );
@@ -92,7 +101,7 @@ const BundlerListener = () => {
   return null;
 };
 
-export const Editor = ({ drill }: Props) => {
+export const Editor = ({ drill, visibleHints, setVisibleHints }: Props) => {
   const testFileName = `/src/${drill.functionName}.${drill.language}`;
   const testingFile = prettier.format(
     `import func from './${drill.functionName}.js'; \n import { isEqual } from 'lodash' \n import drill from './drill.json'\n\n` +
@@ -168,13 +177,22 @@ export const Editor = ({ drill }: Props) => {
           },
         }}
       >
-        <Prettier />
+        <HStack mb={2}>
+          <Prettier />
+          <Button
+            colorScheme="purple"
+            isDisabled={visibleHints === drill.hints.length}
+            onClick={() => setVisibleHints((prev) => prev + 1)}
+          >
+            Show hint
+          </Button>
+        </HStack>
 
         <SandpackCodeEditor
           wrapContent
           showTabs
           showLineNumbers
-          customStyle={{ width: "90vw" }}
+          customStyle={{ minWidth: "600px", maxWidth: "900px" }}
         />
         <Box mt={2}>
           <Console />
