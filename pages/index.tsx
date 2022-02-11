@@ -1,6 +1,7 @@
-import { Center, Heading, Flex, Text, VStack } from "@chakra-ui/react";
+import { Center, Box, Heading, Flex, Text, VStack } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import Head from "next/head";
+import { Editor } from "components/editor";
 
 const Home: NextPage = () => {
   return (
@@ -19,12 +20,31 @@ const Home: NextPage = () => {
               <Text color="secondary-text">
                 Best way to master JS fundamentals
               </Text>
+              <Box p={4}>
+                <Editor drill={drill} />
+              </Box>
             </VStack>
           </Center>
         </Flex>
       </main>
     </div>
   );
+};
+
+const drill = {
+  functionName: "doubleNumber",
+  language: "js",
+  starterCode: `// const number = 1
+
+  const doubleNumber = (number) => {
+    // your code goes here. Good luck 🍀
+  };
+  
+  export default doubleNumber;`,
+  testCases: [
+    { input: 1, output: 2 },
+    { input: 4, output: 8 },
+  ],
 };
 
 export default Home;
