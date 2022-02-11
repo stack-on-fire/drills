@@ -13,6 +13,7 @@ import prettier from "prettier";
 import parserBabel from "prettier/parser-babel";
 import { useCallback, useEffect, useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
+import dynamic from "next/dynamic";
 
 type Drill = {
   functionName: string;
@@ -29,6 +30,8 @@ type TestCase = {
 type Props = {
   drill: Drill;
 };
+
+const Console = dynamic(() => import("../console/index"), { ssr: false });
 
 const Prettier = () => {
   const [prettierCode, setPrettierCode] = useState("");
@@ -76,7 +79,7 @@ const BundlerListener = () => {
       //@ts-expect-error SandpackMessage seems to miss a type
       if (msg.type === "console") {
         //@ts-expect-error SandpackMessage seems to miss a type
-        console.log("log event", msg.log[0].data[0]);
+        console.log(msg.log[0].data[0]);
       }
     });
 
@@ -166,12 +169,17 @@ export const Editor = ({ drill }: Props) => {
         }}
       >
         <Prettier />
+
         <SandpackCodeEditor
           wrapContent
           showTabs
           showLineNumbers
-          customStyle={{ minWidth: 500 }}
+          customStyle={{ width: "90vw" }}
         />
+        <Box mt={2}>
+          <Console />
+        </Box>
+
         <Center>
           <BundlerListener />
         </Center>
@@ -190,7 +198,10 @@ const testerFunction = (func, drill) => {
 
   //@ts-expect-error template loop
   drill.testCases.forEach((item, index) => {
-    console.log(`Running ${index + 1} test out of ${drill.testCases.length}`);
+    console.log(
+      `Running ${index + 1} test out of ${drill.testCases.length}`,
+      "color: blue; font-size: x-large"
+    );
     console.log(`With input ${item.input} expecting output of ${item.output}`);
     console.log(`Got ${func(item.input)}`);
     if (isEqual(func(item.input), item.output)) {
@@ -199,4 +210,6 @@ const testerFunction = (func, drill) => {
       console.log("Test case failed ❌");
     }
   });
+
+  console.log("---------------------------------");
 };
