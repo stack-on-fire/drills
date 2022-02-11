@@ -19,10 +19,11 @@ const Home: NextPage = () => {
         <Flex h="100vh" w="100%" alignItems="center" justifyContent="center">
           <Center>
             <VStack>
-              <Heading color="primary-text">Drills</Heading>
+              <Heading color="primary-text">⚡️Drills⚡️</Heading>
               <Text color="secondary-text">
                 Best way to master JS fundamentals
               </Text>
+
               <Flex
                 flexDirection={[
                   "column-reverse",

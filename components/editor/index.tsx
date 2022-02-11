@@ -181,10 +181,15 @@ export const Editor = ({ drill, visibleHints, setVisibleHints }: Props) => {
           <Prettier />
           <Button
             colorScheme="purple"
-            isDisabled={visibleHints === drill.hints.length}
-            onClick={() => setVisibleHints((prev) => prev + 1)}
+            onClick={() => {
+              if (visibleHints === drill.hints.length) {
+                setVisibleHints(0);
+              } else {
+                setVisibleHints((prev) => prev + 1);
+              }
+            }}
           >
-            Show hint
+            {visibleHints === drill.hints.length ? "Hide hints" : "Show hint"}
           </Button>
         </HStack>
 
