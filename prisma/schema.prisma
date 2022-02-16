@@ -60,12 +60,14 @@ model VerificationToken {
 }
 
 model Drill {
-  id           Int             @id @default(autoincrement())
-  functionName String
-  language     String
-  starterCode  String          @db.VarChar(3000)
-  hints        DrillHint[]
-  testCases    DrillTestCase[]
+  id             Int             @id @default(autoincrement())
+  functionName   String
+  language       String
+  starterCode    String          @db.LongText
+  difficulty     DrillDifficulty
+  explainerVideo String?
+  hints          DrillHint[]
+  testCases      DrillTestCase[]
 }
 
 model DrillHint {
@@ -84,4 +86,10 @@ model DrillTestCase {
 
   drill Drill @relation(fields: [drillId], references: [id])
 
+}
+
+enum DrillDifficulty {
+  EASY
+  MEDIUM
+  HARD
 }

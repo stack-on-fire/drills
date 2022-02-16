@@ -5,7 +5,6 @@ import { drills } from "./drills";
 
 async function main() {
   drills.forEach(async ({ testCases, hints, ...rest }) => {
-    console.log(rest);
     await prisma.drill.create({
       data: {
         ...rest,

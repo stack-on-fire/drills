@@ -15,22 +15,10 @@ import { theme } from "./theme";
 import Prettier from "./prettier";
 import BundlerListener from "./bundler-listener";
 import { getTestingFile } from "./utils";
-
-export type Drill = {
-  functionName: string;
-  language: string;
-  starterCode: string;
-  testCases: ReadonlyArray<TestCase>;
-  hints: ReadonlyArray<string>;
-};
-
-type TestCase = {
-  input: unknown;
-  output: unknown;
-};
+import { DrillWithHintsAndTestCases } from "types/drill";
 
 type Props = {
-  drill: Drill;
+  drill: DrillWithHintsAndTestCases;
   setVisibleHints: Dispatch<SetStateAction<number>>;
   visibleHints: number;
 };
@@ -61,9 +49,11 @@ export const Editor = ({ drill, visibleHints, setVisibleHints }: Props) => {
           },
           "/src/index.js": {
             code: testingFile,
+            hidden: true,
           },
           "/src/drill.json": {
             code: JSON.stringify(drill),
+            hidden: true,
           },
         },
       }}
@@ -84,9 +74,9 @@ export const Editor = ({ drill, visibleHints, setVisibleHints }: Props) => {
           >
             {visibleHints === drill.hints.length ? "Hide hints" : "Show hint"}
           </Button>
-          <Button size="sm" colorScheme="blue">
+          {/* <Button size="sm" colorScheme="blue">
             Submit
-          </Button>
+          </Button> */}
         </HStack>
 
         <SandpackCodeEditor

@@ -32,6 +32,8 @@ export const drills: SeededDrills = [
       },
       { text: "The return statement should look like `return number ** 2;`" },
     ],
+    difficulty: "MEDIUM",
+    explainerVideo: "www.youtube.com",
   },
   {
     functionName: "doubleNumber",
@@ -52,5 +54,7 @@ export const drills: SeededDrills = [
       },
       { text: "The return statement should look like `return number * 2;`" },
     ],
+    difficulty: "HARD",
+    explainerVideo: null,
   },
 ];

@@ -1,7 +1,7 @@
 import { isEqual } from "lodash";
 import parserBabel from "prettier/parser-babel";
 import prettier from "prettier";
-import { Drill } from ".";
+import { Drill } from "@prisma/client";
 
 export const testerFunction = (func, drill) => {
   console.log(`Testing function ${drill.functionName}`);
