@@ -1,7 +1,16 @@
-import { Box, HStack, Icon, SimpleGrid, Text, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  HStack,
+  Icon,
+  SimpleGrid,
+  Text,
+  theme,
+  VStack,
+} from "@chakra-ui/react";
 import { Drill } from "@prisma/client";
 import { SiJavascript } from "react-icons/si";
 import { prisma } from "lib/prisma";
+import { startCase } from "lodash";
 
 import { Navbar } from "components/navbar";
 
@@ -11,6 +20,7 @@ import {
   MdOutlineSignalCellular4Bar,
 } from "react-icons/md";
 import { SiYoutube } from "react-icons/si";
+import Link from "next/link";
 
 const difficultyIcon = (difficulty: Drill["difficulty"]) => {
   if (difficulty === "EASY") {
@@ -28,27 +38,42 @@ const Js = ({ drills }: { drills: ReadonlyArray<Drill> }) => {
       <div>
         <main>
           <Navbar />
-          <SimpleGrid mx={2} mt={4} columns={[1, 3, 4]} spacing={2}>
+          <SimpleGrid mx={8} mt={4} columns={[1, 3, 4]} spacing={2}>
             {drills.map((drill) => {
               return (
-                <Box
-                  borderRadius={4}
-                  px={2}
-                  py={4}
+                <Link
                   key={drill.id}
-                  bgColor="purple.400"
+                  href={`/js/${drill.functionName}`}
+                  passHref
                 >
-                  <VStack h="100%" align="left">
-                    <Text>{drill.functionName}</Text>
-                    <HStack>
-                      <Icon mt="auto" as={SiJavascript} />
-                      <Icon mt="auto" as={difficultyIcon(drill.difficulty)} />
-                      {drill.explainerVideo ?? (
-                        <Icon mt="auto" as={SiYoutube} />
-                      )}
-                    </HStack>
-                  </VStack>
-                </Box>
+                  <Box
+                    _hover={{
+                      cursor: "pointer",
+                      boxShadow: theme.shadows.outline,
+                    }}
+                    borderRadius={4}
+                    px={3}
+                    py={4}
+                    backgroundColor="gray.700"
+                    transition="all 0.2s"
+                  >
+                    <VStack h="100%" align="left">
+                      <Text fontFamily="mono">
+                        {startCase(drill.functionName)}
+                      </Text>
+                      <HStack pt={4} marginTop="auto !important">
+                        <Icon color="yellow.400" as={SiJavascript} />
+                        <Icon
+                          color="orange.400"
+                          as={difficultyIcon(drill.difficulty)}
+                        />
+                        {drill.explainerVideo ?? (
+                          <Icon color="red.500" as={SiYoutube} />
+                        )}
+                      </HStack>
+                    </VStack>
+                  </Box>
+                </Link>
               );
             })}
           </SimpleGrid>
