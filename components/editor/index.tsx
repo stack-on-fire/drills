@@ -83,7 +83,7 @@ export const Editor = ({ drill, visibleHints, setVisibleHints }: Props) => {
           wrapContent
           showTabs
           showLineNumbers
-          customStyle={{ minWidth: "600px", maxWidth: "900px" }}
+          customStyle={{ width: "100% !important" }}
         />
         <Box mt={2}>
           <Console />

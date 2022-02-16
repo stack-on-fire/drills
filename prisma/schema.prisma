@@ -62,6 +62,7 @@ model VerificationToken {
 model Drill {
   id             Int             @id @default(autoincrement())
   functionName   String
+  description    String          @db.LongText
   language       String
   starterCode    String          @db.LongText
   difficulty     DrillDifficulty

@@ -2,10 +2,13 @@ import { Navbar } from "components/navbar";
 import { Drill } from "@prisma/client";
 import { prisma } from "lib/prisma";
 import { useState } from "react";
-import { Flex } from "@chakra-ui/react";
+import { Heading, VStack, Text } from "@chakra-ui/react";
 import { Editor } from "components/editor";
 import Hints from "components/hints";
 import { DrillWithHintsAndTestCases } from "types/drill";
+import { startCase } from "lodash";
+import { Layout } from "components/layout";
+import ReactMarkdown from "react-markdown";
 
 const Drill = ({ drill }: { drill: DrillWithHintsAndTestCases }) => {
   const [visibleHints, setVisibleHints] = useState(0);
@@ -16,27 +19,24 @@ const Drill = ({ drill }: { drill: DrillWithHintsAndTestCases }) => {
         <main>
           <Navbar />
         </main>
-        <Flex
-          flexDirection={[
-            "column-reverse",
-            "column-reverse",
-            "column-reverse",
-            "row",
-          ]}
-          alignItems="center"
-          p={4}
-        >
-          <Editor
-            drill={drill}
-            visibleHints={visibleHints}
-            setVisibleHints={setVisibleHints}
-          />
-          <Hints
-            setVisibleHints={setVisibleHints}
-            visibleHints={visibleHints}
-            drill={drill}
-          />
-        </Flex>
+        <Layout>
+          <VStack mt={8} align="left">
+            <Heading>{startCase(drill.functionName)}</Heading>
+            <Text color="secondary-text">
+              <ReactMarkdown>{drill.description}</ReactMarkdown>
+            </Text>
+            <Hints
+              setVisibleHints={setVisibleHints}
+              visibleHints={visibleHints}
+              drill={drill}
+            />
+            <Editor
+              drill={drill}
+              visibleHints={visibleHints}
+              setVisibleHints={setVisibleHints}
+            />
+          </VStack>
+        </Layout>
       </div>
     </div>
   );

@@ -34,6 +34,8 @@ export const drills: SeededDrills = [
     ],
     difficulty: "MEDIUM",
     explainerVideo: "www.youtube.com",
+    description:
+      "You are asked to write a `function` that iterates over the array and puts every number of it in the power of two. This function then returns the array.",
   },
   {
     functionName: "doubleNumber",
@@ -56,5 +58,7 @@ export const drills: SeededDrills = [
     ],
     difficulty: "HARD",
     explainerVideo: null,
+    description:
+      "You are asked to write a `function` that accepts a number and returns the _doubled number_.",
   },
 ];
