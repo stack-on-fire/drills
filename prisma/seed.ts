@@ -1,9 +1,23 @@
 import { PrismaClient } from "@prisma/client";
-
 const prisma = new PrismaClient();
 
+import { drills } from "./drills";
+
 async function main() {
-  //seeding goes here
+  drills.forEach(async ({ testCases, hints, ...rest }) => {
+    console.log(rest);
+    await prisma.drill.create({
+      data: {
+        ...rest,
+        hints: {
+          create: hints,
+        },
+        testCases: {
+          create: testCases,
+        },
+      },
+    });
+  });
 }
 
 main()

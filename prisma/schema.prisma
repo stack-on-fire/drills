@@ -58,3 +58,30 @@ model VerificationToken {
 
   @@unique([identifier, token])
 }
+
+model Drill {
+  id           Int             @id @default(autoincrement())
+  functionName String
+  language     String
+  starterCode  String          @db.VarChar(3000)
+  hints        DrillHint[]
+  testCases    DrillTestCase[]
+}
+
+model DrillHint {
+  id      String @id @default(cuid())
+  text    String
+  drillId Int
+
+  drill Drill @relation(fields: [drillId], references: [id])
+}
+
+model DrillTestCase {
+  id      String @id @default(cuid())
+  input   Json
+  output  Json
+  drillId Int
+
+  drill Drill @relation(fields: [drillId], references: [id])
+
+}

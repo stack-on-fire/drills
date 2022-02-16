@@ -3,11 +3,9 @@ import parserBabel from "prettier/parser-babel";
 import prettier from "prettier";
 import { Drill } from ".";
 
-//@ts-expect-error template function
 export const testerFunction = (func, drill) => {
   console.log(`Testing function ${drill.functionName}`);
 
-  //@ts-expect-error template loop
   drill.testCases.forEach((item, index) => {
     console.log(
       `Running ${index + 1} test out of ${drill.testCases.length}`,

@@ -8,7 +8,6 @@ const ConsoleComponent = () => {
   useEffect(() => {
     Hook(
       window.console,
-      //@ts-expect-error custom third part library example
       (log) => setLogs((currLogs) => [...currLogs, log]),
       false
     );
