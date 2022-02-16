@@ -1,14 +1,14 @@
 import * as React from "react";
-import Link from "next/link";
 import {
   Box,
   Button,
   HStack,
   useColorModeValue as mode,
   Skeleton,
+  Text,
 } from "@chakra-ui/react";
 
-import { useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
 import { AccountSwitcher } from "components/account";
 
@@ -20,18 +20,17 @@ export const Navbar = () => {
       <AccountSwitcher />
     </HStack>
   ) : (
-    <Link href="/signin">
-      <Button>Sign in</Button>
-    </Link>
+    <Button onClick={() => signIn("github")}>Sign in</Button>
   );
   return (
     <Box as="header" bg={mode("white", "gray.800")} borderBottomWidth="1px">
       <Box maxW="7xl" mx="auto" py="4" px={{ base: "6", md: "8" }}>
         <HStack spacing="8" justifyContent="space-between" alignItems="center">
           <Box cursor="pointer">
-            <HStack>Drills</HStack>
+            <Text fontSize="2xl" fontWeight="bold">
+              Drills
+            </Text>
           </Box>
-          <Skeleton height="20px" />
           <Box>
             {status === "loading" ? (
               <Skeleton height="25px" width={200} />

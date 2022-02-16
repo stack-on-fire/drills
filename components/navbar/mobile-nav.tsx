@@ -10,8 +10,8 @@ import {
   VStack,
   useColorModeValue as mode,
 } from "@chakra-ui/react";
-import { Logo } from "components/logo";
 import { HTMLMotionProps, motion, Variants } from "framer-motion";
+import { signIn } from "next-auth/react";
 import * as React from "react";
 import FocusLock from "react-focus-lock";
 import {
@@ -22,7 +22,6 @@ import {
 } from "react-icons/hi";
 import { RemoveScroll } from "react-remove-scroll";
 import { NavLink } from "./nav-link";
-import { signIn } from "next-auth/client";
 
 const variants: Variants = {
   show: {
@@ -115,7 +114,6 @@ export const MobileNav = () => {
           >
             <Box pt="5" pb="6" px="5">
               <Flex justify="space-between" align="center">
-                <Logo />
                 <Box mr="-2" mt="-2">
                   <Center
                     as="button"
@@ -142,7 +140,7 @@ export const MobileNav = () => {
                 <Box textAlign="center" fontWeight="medium">
                   Have an account?{" "}
                   <Box
-                    onClick={() => signIn()}
+                    onClick={() => signIn("github")}
                     as="a"
                     color={mode("blue.600", "blue.400")}
                   >
