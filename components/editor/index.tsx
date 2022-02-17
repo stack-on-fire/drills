@@ -8,14 +8,15 @@ import {
 import "@codesandbox/sandpack-react/dist/index.css";
 import prettier from "prettier";
 import parserBabel from "prettier/parser-babel";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import dynamic from "next/dynamic";
 
 import { theme } from "./theme";
 import Prettier from "./prettier";
 import BundlerListener from "./bundler-listener";
-import { getTestingFile } from "./utils";
+import { getTesterFunction, getTestingFile } from "./utils";
 import { DrillWithHintsAndTestCases } from "types/drill";
+import Tester from "./tester";
 
 type Props = {
   drill: DrillWithHintsAndTestCases;
@@ -28,6 +29,7 @@ const Console = dynamic(() => import("../console/index"), { ssr: false });
 export const Editor = ({ drill, visibleHints, setVisibleHints }: Props) => {
   const testFileName = `/src/${drill.functionName}.${drill.language}`;
   const testingFile = getTestingFile(drill);
+  const [isReadyToSubmit, setIsReadyToSubmit] = useState(false);
 
   return (
     <SandpackProvider
@@ -55,6 +57,9 @@ export const Editor = ({ drill, visibleHints, setVisibleHints }: Props) => {
             code: JSON.stringify(drill),
             hidden: true,
           },
+          "/src/index.test.js": {
+            code: getTesterFunction(drill, drill.testCases),
+          },
         },
       }}
     >
@@ -74,9 +79,11 @@ export const Editor = ({ drill, visibleHints, setVisibleHints }: Props) => {
           >
             {visibleHints === drill.hints.length ? "Hide hints" : "Show hint"}
           </Button>
-          {/* <Button size="sm" colorScheme="blue">
-            Submit
-          </Button> */}
+          <Tester
+            setIsReadyToSubmit={setIsReadyToSubmit}
+            isReadyToSubmit={isReadyToSubmit}
+            totalCases={drill.testCases.length}
+          />
         </HStack>
 
         <SandpackCodeEditor

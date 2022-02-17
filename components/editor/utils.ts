@@ -1,7 +1,7 @@
 import { isEqual } from "lodash";
 import parserBabel from "prettier/parser-babel";
 import prettier from "prettier";
-import { Drill } from "@prisma/client";
+import { Drill, DrillTestCase } from "@prisma/client";
 
 export const testerFunction = (func, drill) => {
   console.log(`Testing function ${drill.functionName}`);
@@ -37,4 +37,22 @@ export const getTestingFile = (drill: Drill) => {
       }
     )
     .replace("(0, lodash__WEBPACK_IMPORTED_MODULE_0__.isEqual)", "isEqual");
+};
+
+export const getTesterFunction = (
+  drill: Drill,
+  testCases: ReadonlyArray<DrillTestCase>
+) => {
+  const cases = testCases.map((testCase, i) => {
+    return `test('Test Case #${i}', () => {
+    expect(func(${testCase.input})).toBe(${testCase.output});
+  });`;
+  });
+  return prettier.format(
+    `import func from './${drill.functionName}.js';` + cases.join(";"),
+    {
+      parser: "babel",
+      plugins: [parserBabel],
+    }
+  );
 };
