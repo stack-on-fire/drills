@@ -1,49 +1,44 @@
 import {
   Box,
+  Heading,
   HStack,
   Icon,
   SimpleGrid,
   Text,
   theme,
-  VStack,
 } from "@chakra-ui/react";
-import { Drill } from "@prisma/client";
+import { Drill, DrillCollection } from "@prisma/client";
 import { SiJavascript } from "react-icons/si";
 import { prisma } from "lib/prisma";
-import { startCase } from "lodash";
 
 import { Navbar } from "components/navbar";
 
-import {
-  MdSignalCellular1Bar,
-  MdSignalCellular2Bar,
-  MdOutlineSignalCellular4Bar,
-} from "react-icons/md";
-import { SiYoutube } from "react-icons/si";
 import Link from "next/link";
+import { Layout } from "components/layout";
+import DrillsList from "components/drills-grid";
 
-const difficultyIcon = (difficulty: Drill["difficulty"]) => {
-  if (difficulty === "EASY") {
-    return MdSignalCellular1Bar;
-  } else if (difficulty === "MEDIUM") {
-    return MdSignalCellular2Bar;
-  } else if (difficulty === "HARD") {
-    return MdOutlineSignalCellular4Bar;
-  }
-};
-
-const Js = ({ drills }: { drills: ReadonlyArray<Drill> }) => {
+const Js = ({
+  drills,
+  collections,
+}: {
+  drills: ReadonlyArray<Drill>;
+  collections: ReadonlyArray<DrillCollection>;
+}) => {
+  console.log(collections);
   return (
     <div>
-      <div>
-        <main>
-          <Navbar />
-          <SimpleGrid mx={8} mt={4} columns={[1, 3, 4]} spacing={2}>
-            {drills.map((drill) => {
+      <main>
+        <Navbar />
+        <Layout>
+          <Heading mt={4} fontSize="2xl">
+            Collections
+          </Heading>
+          <SimpleGrid mt={4} columns={[1, 3, 4]} spacing={2}>
+            {collections.map((collection) => {
               return (
                 <Link
-                  key={drill.id}
-                  href={`/js/${drill.functionName}`}
+                  key={collection.id}
+                  href={`/js/collections/${collection.id}`}
                   passHref
                 >
                   <Box
@@ -57,28 +52,23 @@ const Js = ({ drills }: { drills: ReadonlyArray<Drill> }) => {
                     backgroundColor="gray.700"
                     transition="all 0.2s"
                   >
-                    <VStack h="100%" align="left">
-                      <Text fontFamily="mono">
-                        {startCase(drill.functionName)}
+                    <HStack>
+                      <Icon color="yellow.400" as={SiJavascript} />
+                      <Text fontFamily="mono" fontSize="sm">
+                        {collection.name}
                       </Text>
-                      <HStack pt={4} marginTop="auto !important">
-                        <Icon color="yellow.400" as={SiJavascript} />
-                        <Icon
-                          color="orange.400"
-                          as={difficultyIcon(drill.difficulty)}
-                        />
-                        {drill.explainerVideo ?? (
-                          <Icon color="red.500" as={SiYoutube} />
-                        )}
-                      </HStack>
-                    </VStack>
+                    </HStack>
                   </Box>
                 </Link>
               );
             })}
           </SimpleGrid>
-        </main>
-      </div>
+          <Heading mt={4} fontSize="2xl">
+            New drills
+          </Heading>
+          <DrillsList drills={drills} />
+        </Layout>
+      </main>
     </div>
   );
 };
@@ -86,9 +76,17 @@ const Js = ({ drills }: { drills: ReadonlyArray<Drill> }) => {
 // This function gets called at build time
 export async function getStaticProps() {
   const jsDrills = await prisma.drill.findMany();
+  const jsCollections = await prisma.drillCollection.findMany({
+    where: {
+      language: "javascript",
+    },
+  });
+
+  console.log(jsCollections);
   return {
     props: {
       drills: jsDrills,
+      collections: JSON.parse(JSON.stringify(jsCollections)),
     },
   };
 }

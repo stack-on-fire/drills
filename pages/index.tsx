@@ -6,6 +6,8 @@ import Hints from "components/hints";
 import { useState } from "react";
 import { Navbar } from "components/navbar";
 
+import { DrillWithHintsAndTestCases } from "types/drill";
+
 const Home: NextPage = () => {
   const [visibleHints, setVisibleHints] = useState(0);
 
@@ -74,24 +76,36 @@ const Home: NextPage = () => {
 //     "The return statement should look like `return number * 2;`",
 //   ],
 // };
-const drill = {
-  functionName: "powerOfTwoArrayNumbers",
+const drill: DrillWithHintsAndTestCases = {
+  id: 1,
+  functionName: "doubleNumber",
   language: "js",
   starterCode: `
-  // Iterate over array of numbers and put every number to the power of two. 
-  const powerOfTwoArrayNumbers = (array) => {
+  const doubleNumber = (number) => {
     // your code goes here. Good luck 🍀
   };
-  
-  export default powerOfTwoArrayNumbers;`,
+
+  export default doubleNumber;`,
   testCases: [
-    { input: [1, 2, 3], output: [1, 4, 9] },
-    { input: [10, 2, 8], output: [100, 4, 64] },
+    { id: "a", drillId: 1, input: 1, output: 2 },
+    { id: "b", drillId: 1, input: 4, output: 8 },
   ],
   hints: [
-    "To write this function you need to use the `**` operator of JavaScript",
-    "The return statement should look like `return number ** 2;`",
+    {
+      id: "a",
+      drillId: 1,
+      text: "To write this function you need to use the `*` operator of JavaScript",
+    },
+    {
+      id: "b",
+      drillId: 1,
+      text: "The return statement should look like `return number * 2;`",
+    },
   ],
+  difficulty: "HARD",
+  explainerVideo: null,
+  description:
+    "You are asked to write a `function` that accepts a number and returns the _doubled number_.",
 };
 
 export default Home;

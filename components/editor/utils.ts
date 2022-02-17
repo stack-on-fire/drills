@@ -44,8 +44,16 @@ export const getTesterFunction = (
   testCases: ReadonlyArray<DrillTestCase>
 ) => {
   const cases = testCases.map((testCase, i) => {
+    const prepareTestCase =
+      typeof testCase.input === "string"
+        ? `'${testCase.input}'`
+        : testCase.input;
+    const prepareOutput =
+      typeof testCase.output === "string"
+        ? `'${testCase.output}'`
+        : testCase.output;
     return `test('Test Case #${i}', () => {
-    expect(func(${testCase.input})).toBe(${testCase.output});
+    expect(func(${prepareTestCase})).toBe(${prepareOutput});
   });`;
   });
   return prettier.format(

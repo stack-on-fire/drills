@@ -28,7 +28,22 @@ const ConsoleComponent = () => {
       <Text color="secondary-text" ml={4} my={2}>
         Console
       </Text>
-      <Box maxH="250px" overflowY="scroll">
+      <Box
+        maxH="250px"
+        overflowY="scroll"
+        css={{
+          "&::-webkit-scrollbar": {
+            width: "4px",
+          },
+          "&::-webkit-scrollbar-track": {
+            width: "6px",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            background: "white",
+            borderRadius: "24px",
+          },
+        }}
+      >
         <Console filter={["log", "error"]} logs={logs} variant="dark" />
         <AlwaysScrollToBottom />
       </Box>
