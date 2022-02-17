@@ -28,7 +28,6 @@ const Console = dynamic(() => import("../console/index"), { ssr: false });
 
 export const Editor = ({ drill, visibleHints, setVisibleHints }: Props) => {
   const testFileName = `/src/${drill.functionName}.${drill.language}`;
-  const testingFile = getTestingFile(drill);
   const [isReadyToSubmit, setIsReadyToSubmit] = useState(false);
 
   return (
@@ -50,7 +49,7 @@ export const Editor = ({ drill, visibleHints, setVisibleHints }: Props) => {
             }),
           },
           "/src/index.js": {
-            code: testingFile,
+            code: getTestingFile(),
             hidden: true,
           },
           "/src/drill.json": {
