@@ -7,7 +7,7 @@ import {
   HStack,
   Divider,
 } from "@chakra-ui/react";
-import { DrillCollection } from "@prisma/client";
+import { DrillCollection, DrillCompletion } from "@prisma/client";
 
 import React, { useState } from "react";
 import { prisma } from "lib/prisma";
@@ -25,7 +25,9 @@ const CollectionView = ({
   collection,
 }: {
   collection: DrillCollection & {
-    drills: ReadonlyArray<DrillWithHintsAndTestCases>;
+    drills: ReadonlyArray<
+      DrillWithHintsAndTestCases & { completion: DrillCompletion }
+    >;
   };
 }) => {
   const [drill, setQueryDrill] = useQueryState(
@@ -112,7 +114,6 @@ const CollectionView = ({
 };
 
 export async function getStaticPaths() {
-  console.log(321);
   const collections = await prisma.drillCollection.findMany({
     where: {
       language: "javascript",
@@ -132,7 +133,7 @@ export async function getStaticProps({ params }) {
       id: params.id,
     },
     include: {
-      drills: { include: { hints: true, testCases: true } },
+      drills: { include: { hints: true, testCases: true, completion: true } },
     },
   });
 

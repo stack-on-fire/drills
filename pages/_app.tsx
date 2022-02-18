@@ -3,14 +3,24 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { SessionProvider } from "next-auth/react";
 import { theme } from "chakra-ui/theme";
 import "@codesandbox/sandpack-react/dist/index.css";
+import React from "react";
+import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
+
+import { ReactQueryDevtools } from "react-query/devtools";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
+  const [queryClient] = React.useState(() => new QueryClient());
   return (
-    <SessionProvider session={session} refetchInterval={5 * 60}>
-      <ChakraProvider theme={theme}>
-        <Component {...pageProps} />
-      </ChakraProvider>
-    </SessionProvider>
+    <QueryClientProvider client={queryClient}>
+      <Hydrate state={pageProps.dehydratedState}>
+        <SessionProvider session={session} refetchInterval={5 * 60}>
+          <ChakraProvider theme={theme}>
+            <Component {...pageProps} />
+          </ChakraProvider>
+        </SessionProvider>
+      </Hydrate>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   );
 }
 

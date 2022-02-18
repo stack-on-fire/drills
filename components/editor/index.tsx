@@ -17,9 +17,10 @@ import BundlerListener from "./bundler-listener";
 import { getTesterFunction, getTestingFile } from "./utils";
 import { DrillWithHintsAndTestCases } from "types/drill";
 import Tester from "./tester";
+import { DrillCompletion } from "@prisma/client";
 
 type Props = {
-  drill: DrillWithHintsAndTestCases;
+  drill: DrillWithHintsAndTestCases & { completion: DrillCompletion };
   setVisibleHints: Dispatch<SetStateAction<number>>;
   visibleHints: number;
 };
@@ -43,21 +44,28 @@ export const Editor = ({ drill, visibleHints, setVisibleHints }: Props) => {
         files: {
           [testFileName]: {
             active: true,
-            code: prettier.format(drill.starterCode, {
-              parser: "babel",
-              plugins: [parserBabel],
-            }),
+            readOnly: !!drill.completion,
+            code: drill.completion
+              ? prettier.format(drill.completion.solution, {
+                  parser: "babel",
+                  plugins: [parserBabel],
+                })
+              : prettier.format(drill.starterCode, {
+                  parser: "babel",
+                  plugins: [parserBabel],
+                }),
           },
           "/src/index.js": {
-            code: getTestingFile(),
-            hidden: true,
+            code: getTestingFile(drill),
+            // hidden: true,
           },
           "/src/drill.json": {
             code: JSON.stringify(drill),
-            hidden: true,
+            // hidden: true,
           },
           "/src/index.test.js": {
-            code: getTesterFunction(drill, drill.testCases),
+            code: getTesterFunction(drill),
+            // hidden: true,
           },
         },
       }}
@@ -81,7 +89,7 @@ export const Editor = ({ drill, visibleHints, setVisibleHints }: Props) => {
           <Tester
             setIsReadyToSubmit={setIsReadyToSubmit}
             isReadyToSubmit={isReadyToSubmit}
-            totalCases={drill.testCases.length}
+            drill={drill}
           />
         </HStack>
 

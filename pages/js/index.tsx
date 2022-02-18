@@ -24,7 +24,6 @@ const Js = ({
   drills: ReadonlyArray<Drill>;
   collections: ReadonlyArray<DrillCollection>;
 }) => {
-  console.log(collections);
   return (
     <div>
       <main>
@@ -82,7 +81,6 @@ export async function getStaticProps() {
     },
   });
 
-  console.log(jsCollections);
   return {
     props: {
       drills: jsDrills,

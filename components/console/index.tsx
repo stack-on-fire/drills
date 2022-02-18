@@ -55,9 +55,9 @@ export default ConsoleComponent;
 
 const AlwaysScrollToBottom = () => {
   const elementRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const element = elementRef.current;
-    element?.scrollIntoView();
-  });
+  // useEffect(() => {
+  //   const element = elementRef.current;
+  //   element?.scrollIntoView();
+  // });
   return <div ref={elementRef} />;
 };

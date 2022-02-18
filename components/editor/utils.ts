@@ -2,9 +2,9 @@ import parserBabel from "prettier/parser-babel";
 import prettier from "prettier";
 import { Drill, DrillTestCase } from "@prisma/client";
 
-export const getTestingFile = () =>
+export const getTestingFile = (drill: Drill) =>
   prettier.format(
-    `import func from "./doubleNumber.js";
+    `import func from "./${drill.functionName}.${drill.language}";
 import { isEqual } from "lodash";
 import drill from "./drill.json";
 
@@ -44,20 +44,28 @@ tester(func, drill);`,
   );
 
 export const getTesterFunction = (
-  drill: Drill,
-  testCases: ReadonlyArray<DrillTestCase>
+  drill: Drill & { testCases: ReadonlyArray<DrillTestCase> }
 ) => {
-  const cases = testCases.map((testCase, i) => {
-    const prepareTestCase =
-      typeof testCase.input === "string"
-        ? `'${testCase.input}'`
-        : testCase.input;
-    const prepareOutput =
-      typeof testCase.output === "string"
-        ? `'${testCase.output}'`
-        : testCase.output;
+  const cases = drill.testCases.map((testCase, i) => {
+    let input;
+    let output;
+    if (typeof input === "string") {
+      input = `'${testCase.input}'`;
+    } else if (Array.isArray(testCase.input)) {
+      input = `${JSON.stringify(testCase.input)}`;
+    } else {
+      input = testCase.input;
+    }
+    if (typeof output === "string") {
+      output = `'${testCase.output}'`;
+    } else if (Array.isArray(testCase.output)) {
+      output = `${JSON.stringify(testCase.output)}`;
+    } else {
+      output = testCase.output;
+    }
+
     return `test('Test Case #${i}', () => {
-    expect(func(${prepareTestCase})).toBe(${prepareOutput});
+    expect(func(${input})).toEqual(${output});
   });`;
   });
   return prettier.format(

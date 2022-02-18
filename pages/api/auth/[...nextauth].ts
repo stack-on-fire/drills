@@ -18,4 +18,25 @@ const options = {
   adapter: PrismaAdapter(prisma),
 
   secret: process.env.SECRET,
+  callbacks: {
+    async session({ session, user }) {
+      const resolvedUser = await prisma.user.findUnique({
+        where: {
+          email: user.email,
+        },
+      });
+
+      if (!resolvedUser) {
+        return Promise.resolve(session);
+      }
+
+      return Promise.resolve({
+        ...session,
+        user: {
+          ...session.user,
+          id: resolvedUser.id,
+        },
+      });
+    },
+  },
 };
