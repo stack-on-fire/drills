@@ -11,7 +11,7 @@ jobs:
         run: |
           yarn
           NODE_ENV=test yarn build
-          NODE_ENV=test yarn start & cypress-io/github-action@v2
+          NODE_ENV=test yarn start &cypress-io/github-action@v2
         env:
           DATABASE_URL: ${{secrets.DATABASE_URL}}
 
