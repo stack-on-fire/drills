@@ -7,6 +7,7 @@ import { useState } from "react";
 import { Navbar } from "components/navbar";
 
 import { DrillWithHintsAndTestCases } from "types/drill";
+import { DrillCompletion } from "@prisma/client";
 
 const Home: NextPage = () => {
   const [visibleHints, setVisibleHints] = useState(0);
@@ -76,8 +77,9 @@ const Home: NextPage = () => {
 //     "The return statement should look like `return number * 2;`",
 //   ],
 // };
-const drill: DrillWithHintsAndTestCases = {
+const drill: DrillWithHintsAndTestCases & { completion: DrillCompletion } = {
   id: 1,
+  completion: null,
   functionName: "doubleNumber",
   language: "js",
   starterCode: `
