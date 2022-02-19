@@ -49,14 +49,14 @@ export const getTesterFunction = (
   const cases = drill.testCases.map((testCase, i) => {
     let input;
     let output;
-    if (typeof input === "string") {
+    if (typeof testCase.input === "string") {
       input = `'${testCase.input}'`;
     } else if (Array.isArray(testCase.input)) {
       input = `${JSON.stringify(testCase.input)}`;
     } else {
       input = testCase.input;
     }
-    if (typeof output === "string") {
+    if (typeof testCase.output === "string") {
       output = `'${testCase.output}'`;
     } else if (Array.isArray(testCase.output)) {
       output = `${JSON.stringify(testCase.output)}`;

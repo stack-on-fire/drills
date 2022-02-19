@@ -95,6 +95,7 @@ export const Editor = ({ drill, visibleHints, setVisibleHints }: Props) => {
 
         <SandpackCodeEditor
           wrapContent
+          showReadOnly={false}
           showTabs
           showLineNumbers
           customStyle={{ width: "100% !important" }}
