@@ -1,4 +1,12 @@
-import { Center, Heading, Flex, Text, VStack } from "@chakra-ui/react";
+import {
+  Center,
+  Heading,
+  Flex,
+  Text,
+  VStack,
+  Box,
+  useMediaQuery,
+} from "@chakra-ui/react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { Editor } from "components/editor";
@@ -11,6 +19,7 @@ import { DrillCompletion } from "@prisma/client";
 
 const Home: NextPage = () => {
   const [visibleHints, setVisibleHints] = useState(0);
+  const [isLargerThan600] = useMediaQuery("(min-width: 600px)");
 
   return (
     <div>
@@ -27,30 +36,28 @@ const Home: NextPage = () => {
             <VStack>
               <Heading color="primary-text">⚡️Drills⚡️</Heading>
               <Text color="secondary-text">
-                Best way to master JS fundamentals
+                Best way to master JS fundamentals. Try it now 👇🏼
               </Text>
 
-              <Flex
-                flexDirection={[
-                  "column-reverse",
-                  "column-reverse",
-                  "column-reverse",
-                  "row",
-                ]}
-                alignItems="center"
+              <Box
                 p={4}
+                sx={{
+                  ".sp-wrapper": {
+                    width: isLargerThan600 ? "560px" : "340px",
+                  },
+                }}
               >
-                <Editor
-                  drill={drill}
-                  visibleHints={visibleHints}
-                  setVisibleHints={setVisibleHints}
-                />
                 <Hints
                   setVisibleHints={setVisibleHints}
                   visibleHints={visibleHints}
                   drill={drill}
                 />
-              </Flex>
+                <Editor
+                  drill={drill}
+                  visibleHints={visibleHints}
+                  setVisibleHints={setVisibleHints}
+                />
+              </Box>
             </VStack>
           </Center>
         </Flex>

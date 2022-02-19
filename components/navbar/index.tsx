@@ -11,6 +11,7 @@ import {
 import { signIn, useSession } from "next-auth/react";
 
 import { AccountSwitcher } from "components/account";
+import Link from "next/link";
 
 export const Navbar = () => {
   const { data: session, status } = useSession();
@@ -27,9 +28,11 @@ export const Navbar = () => {
       <Box maxW="7xl" mx="auto" py="4" px={{ base: "6", md: "8" }}>
         <HStack spacing="8" justifyContent="space-between" alignItems="center">
           <Box cursor="pointer">
-            <Text fontSize="2xl" fontWeight="bold">
-              Drills
-            </Text>
+            <Link href={"/"}>
+              <Text fontSize="2xl" fontWeight="bold">
+                ⚡️ Drills
+              </Text>
+            </Link>
           </Box>
           <Box>
             {status === "loading" ? (

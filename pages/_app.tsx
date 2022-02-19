@@ -7,6 +7,7 @@ import React from "react";
 import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
 
 import { ReactQueryDevtools } from "react-query/devtools";
+import { Toaster } from "react-hot-toast";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const [queryClient] = React.useState(() => new QueryClient());
@@ -15,6 +16,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
       <Hydrate state={pageProps.dehydratedState}>
         <SessionProvider session={session} refetchInterval={5 * 60}>
           <ChakraProvider theme={theme}>
+            <Toaster />
             <Component {...pageProps} />
           </ChakraProvider>
         </SessionProvider>
