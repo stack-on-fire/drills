@@ -57,15 +57,15 @@ export const Editor = ({ drill, visibleHints, setVisibleHints }: Props) => {
           },
           "/src/index.js": {
             code: getTestingFile(drill),
-            // hidden: true,
+            hidden: true,
           },
           "/src/drill.json": {
             code: JSON.stringify(drill),
-            // hidden: true,
+            hidden: true,
           },
           "/src/index.test.js": {
             code: getTesterFunction(drill),
-            // hidden: true,
+            hidden: true,
           },
         },
       }}
