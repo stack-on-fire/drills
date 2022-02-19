@@ -20,6 +20,7 @@ import { Editor } from "components/editor";
 import Hints from "components/hints";
 import ReactMarkdown from "react-markdown";
 import { DrillWithHintsAndTestCases } from "types/drill";
+import { CheckCircleIcon } from "@chakra-ui/icons";
 
 const CollectionView = ({
   collection,
@@ -46,9 +47,14 @@ const CollectionView = ({
             <HStack alignItems="center">
               <Heading fontSize="2xl">{collection.name}</Heading>
               <Divider orientation="vertical" />
-              <Heading fontSize="2xl" color="purple.300">
-                {startCase(selectedDrill.functionName)}
-              </Heading>
+              <HStack>
+                {selectedDrill.completion && (
+                  <CheckCircleIcon fontSize="2xl" color="green.200" />
+                )}
+                <Heading fontSize="2xl" color="purple.300">
+                  {startCase(selectedDrill.functionName)}
+                </Heading>
+              </HStack>
             </HStack>
             <Text color="secondary-text">
               <ReactMarkdown>{selectedDrill.description}</ReactMarkdown>
@@ -101,7 +107,13 @@ const CollectionView = ({
                           : "gray.600",
                     }}
                   >
-                    {i + 1}. {startCase(currentDrill.functionName)}
+                    <HStack>
+                      <Box>{i + 1}.</Box>
+                      {currentDrill.completion && (
+                        <CheckCircleIcon fontSize="md" color="green.200" />
+                      )}
+                      <Box>{startCase(currentDrill.functionName)}</Box>
+                    </HStack>
                   </Box>
                 );
               })}
