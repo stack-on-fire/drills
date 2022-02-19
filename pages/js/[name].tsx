@@ -17,11 +17,9 @@ import { useRouter } from "next/router";
 const Drill = () => {
   const [visibleHints, setVisibleHints] = useState(0);
   const router = useRouter();
-  const { data: drill, isLoading } = useDrill({
+  const { data: drill } = useDrill({
     functionName: router.query.name as string,
   });
-
-  console.log({ isLoading, drill });
 
   return (
     <div>
