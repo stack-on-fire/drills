@@ -15,6 +15,7 @@ jobs:
           wait-on: http://localhost:3000
         env:
           DATABASE_URL: ${{secrets.DATABASE_URL}}
+          NEXTAUTH_SECRET: ${{secrets.NEXTAUTH_SECRET}}
 
       - uses: actions/upload-artifact@v2
         if: always()
