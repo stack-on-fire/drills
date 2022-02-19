@@ -31,7 +31,12 @@ const difficultyIcon = (difficulty: Drill["difficulty"]) => {
 
 const DrillsList = ({ drills }: { drills: ReadonlyArray<Drill> }) => {
   return (
-    <SimpleGrid mt={4} columns={[1, 3, 4]} spacing={2}>
+    <SimpleGrid
+      data-cy="new-drills-list"
+      mt={4}
+      columns={[1, 3, 4]}
+      spacing={2}
+    >
       {drills.map((drill) => {
         return (
           <Link key={drill.id} href={`/js/${drill.functionName}`} passHref>

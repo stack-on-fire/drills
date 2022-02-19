@@ -29,43 +29,52 @@ const Js = ({
       <main>
         <Navbar />
         <Layout>
-          <Heading mt={4} fontSize="2xl">
-            Collections
-          </Heading>
-          <SimpleGrid mt={4} columns={[1, 3, 4]} spacing={2}>
-            {collections.map((collection) => {
-              return (
-                <Link
-                  key={collection.id}
-                  href={`/js/collections/${collection.id}`}
-                  passHref
-                >
-                  <Box
-                    _hover={{
-                      cursor: "pointer",
-                      boxShadow: theme.shadows.outline,
-                    }}
-                    borderRadius={4}
-                    px={3}
-                    py={4}
-                    backgroundColor="gray.700"
-                    transition="all 0.2s"
+          <Box data-cy="drill-collections">
+            <Heading mt={4} fontSize="2xl">
+              Collections
+            </Heading>
+            <SimpleGrid
+              data-cy="collections-list"
+              mt={4}
+              columns={[1, 3, 4]}
+              spacing={2}
+            >
+              {collections.map((collection) => {
+                return (
+                  <Link
+                    key={collection.id}
+                    href={`/js/collections/${collection.id}`}
+                    passHref
                   >
-                    <HStack>
-                      <Icon color="yellow.400" as={SiJavascript} />
-                      <Text fontFamily="mono" fontSize="sm">
-                        {collection.name}
-                      </Text>
-                    </HStack>
-                  </Box>
-                </Link>
-              );
-            })}
-          </SimpleGrid>
-          <Heading mt={4} fontSize="2xl">
-            New drills
-          </Heading>
-          <DrillsList drills={drills} />
+                    <Box
+                      _hover={{
+                        cursor: "pointer",
+                        boxShadow: theme.shadows.outline,
+                      }}
+                      borderRadius={4}
+                      px={3}
+                      py={4}
+                      backgroundColor="gray.700"
+                      transition="all 0.2s"
+                    >
+                      <HStack>
+                        <Icon color="yellow.400" as={SiJavascript} />
+                        <Text fontFamily="mono" fontSize="sm">
+                          {collection.name}
+                        </Text>
+                      </HStack>
+                    </Box>
+                  </Link>
+                );
+              })}
+            </SimpleGrid>
+          </Box>
+          <Box data-cy="new-drills">
+            <Heading mt={4} fontSize="2xl">
+              New drills
+            </Heading>
+            <DrillsList drills={drills} />
+          </Box>
         </Layout>
       </main>
     </div>
