@@ -7,7 +7,6 @@ import {
   HStack,
   Divider,
 } from "@chakra-ui/react";
-import { DrillCollection, DrillCompletion } from "@prisma/client";
 
 import React, { useState } from "react";
 import { prisma } from "lib/prisma";
@@ -19,18 +18,18 @@ import { queryTypes, useQueryState } from "next-usequerystate";
 import { Editor } from "components/editor";
 import Hints from "components/hints";
 import ReactMarkdown from "react-markdown";
-import { DrillWithHintsAndTestCases } from "types/drill";
-import { CheckCircleIcon } from "@chakra-ui/icons";
 
-const CollectionView = ({
-  collection,
-}: {
-  collection: DrillCollection & {
-    drills: ReadonlyArray<
-      DrillWithHintsAndTestCases & { completion: DrillCompletion }
-    >;
-  };
-}) => {
+import { CheckCircleIcon } from "@chakra-ui/icons";
+import { QueryClient, dehydrate } from "react-query";
+import { fetchCollection, useCollection } from "hooks/queries/useCollection";
+import { useRouter } from "next/router";
+
+const CollectionView = () => {
+  const router = useRouter();
+  const { data: collection } = useCollection({
+    id: router.query.id as string,
+  });
+
   const [drill, setQueryDrill] = useQueryState(
     "drill",
     queryTypes.string.withDefault(collection.drills[0].functionName)
@@ -140,20 +139,13 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const collection = await prisma.drillCollection.findUnique({
-    where: {
-      id: params.id,
-    },
-    include: {
-      drills: { include: { hints: true, testCases: true, completion: true } },
-    },
-  });
+  const queryClient = new QueryClient();
 
-  return {
-    props: {
-      collection: JSON.parse(JSON.stringify(collection)),
-    },
-  };
+  await queryClient.prefetchQuery(["collection", params.id], () =>
+    fetchCollection({ id: params.id })
+  );
+
+  return { props: { dehydratedState: dehydrate(queryClient) } };
 }
 
 export default CollectionView;

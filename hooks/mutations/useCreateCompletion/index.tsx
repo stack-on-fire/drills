@@ -20,6 +20,7 @@ const useCreateCompletion = () => {
     {
       onSuccess: async () => {
         await queryClient.refetchQueries(["drill"]);
+        await queryClient.refetchQueries(["collection"]);
       },
     }
   );
