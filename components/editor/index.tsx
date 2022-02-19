@@ -74,6 +74,7 @@ export const Editor = ({ drill, visibleHints, setVisibleHints }: Props) => {
         <HStack mb={2}>
           <Prettier />
           <Button
+            data-cy="hints"
             size="sm"
             colorScheme="purple"
             onClick={() => {

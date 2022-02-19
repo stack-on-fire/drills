@@ -37,7 +37,12 @@ const Prettier = () => {
   });
 
   return (
-    <Button size="sm" colorScheme="green" onClick={() => runPrettier()}>
+    <Button
+      data-cy="prettier"
+      size="sm"
+      colorScheme="green"
+      onClick={() => runPrettier()}
+    >
       Prettify code
     </Button>
   );

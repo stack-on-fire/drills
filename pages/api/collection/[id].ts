@@ -8,7 +8,6 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const { id } = req.query;
-
   const collection = await prisma.drillCollection.findUnique({
     where: {
       id: id as string,

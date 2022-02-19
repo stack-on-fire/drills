@@ -60,7 +60,7 @@ const Tester = ({
         } else {
           toast(
             (t) => (
-              <Box>
+              <Box data-cy="tester-toast">
                 <Text>
                   Amazing job! Sign with with <b>GitHub</b> to save your
                   progress and access <b>dozens of other challenges</b>
@@ -95,6 +95,7 @@ const Tester = ({
 
   return (
     <Button
+      data-cy="tester"
       isDisabled={!isReadyToSubmit || !!drill.completion}
       size="sm"
       onClick={() => {
