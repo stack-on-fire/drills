@@ -11,7 +11,7 @@ import { Layout } from "components/layout";
 import ReactMarkdown from "react-markdown";
 import { CheckCircleIcon } from "@chakra-ui/icons";
 import { dehydrate, QueryClient } from "react-query";
-import { fetchDrill, useDrill } from "hooks/queries/useDrill";
+import { useDrill } from "hooks/queries/useDrill";
 import { useRouter } from "next/router";
 
 const Drill = () => {
@@ -77,9 +77,19 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery(["drill", params.name], () =>
-    fetchDrill({ functionName: params.name })
-  );
+  await queryClient.prefetchQuery(["drill", params.name], async () => {
+    const drill = await prisma.drill.findFirst({
+      where: {
+        functionName: params.name,
+      },
+      include: {
+        testCases: true,
+        hints: true,
+        completion: true,
+      },
+    });
+    return JSON.parse(JSON.stringify(drill));
+  });
 
   return { props: { dehydratedState: dehydrate(queryClient) } };
 }
