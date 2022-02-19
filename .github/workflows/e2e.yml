@@ -12,6 +12,8 @@ jobs:
           yarn
           NODE_ENV=test yarn build
           NODE_ENV=test yarn start &
+        env:
+          DATABASE_URL: ${{secrets.DATABASE_URL}}
 
       - name: Run E2E
         run: |
