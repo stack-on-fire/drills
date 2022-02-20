@@ -20,7 +20,6 @@ const Drill = () => {
   const { data: drill } = useDrill({
     functionName: router.query.name as string,
   });
-
   return (
     <div>
       <div>

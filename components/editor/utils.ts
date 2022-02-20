@@ -27,7 +27,7 @@ const tester = function (func, drill) {
       isEqual(
         func(item.input),
         item.output
-      )
+      ) ||func(item.input)===item.output
     ) {
       console.log("Test case passed ✅");
     } else {
