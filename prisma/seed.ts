@@ -4,6 +4,10 @@ const prisma = new PrismaClient();
 import { drills } from "./drills";
 
 async function main() {
+  await prisma.drill.deleteMany();
+  await prisma.drillHint.deleteMany();
+  await prisma.drillCompletion.deleteMany();
+  await prisma.drillTestCase.deleteMany();
   drills.forEach(async ({ testCases, hints, ...rest }) => {
     await prisma.drill.create({
       data: {

@@ -26,12 +26,19 @@ import { useRouter } from "next/router";
 import { AnimatePresence, motion } from "framer-motion";
 
 const MotionHeading = motion(Heading);
+const MotionBox = motion(Box);
 const MotionText = motion(Text);
 
 const animate = {
   animate: { opacity: 1, y: 0 },
   initial: { opacity: 0, y: 10 },
   exit: { opacity: 0, y: 5 },
+  transition: { duration: 0.3 },
+};
+const editorAnimate = {
+  animate: { opacity: 1, y: 0, x: 0 },
+  initial: { opacity: 0, y: 5, x: 5 },
+  exit: { opacity: 0, y: 5, x: 5 },
   transition: { duration: 0.3 },
 };
 
@@ -87,13 +94,22 @@ const CollectionView = () => {
               visibleHints={visibleHints}
               drill={selectedDrill}
             />
-            <Editor
-              drill={selectedDrill}
-              visibleHints={visibleHints}
-              setVisibleHints={setVisibleHints}
-            />
+            <AnimatePresence exitBeforeEnter>
+              <MotionBox
+                key={selectedDrill.id}
+                color="secondary-text"
+                {...editorAnimate}
+              >
+                <Editor
+                  drill={selectedDrill}
+                  visibleHints={visibleHints}
+                  setVisibleHints={setVisibleHints}
+                />
+              </MotionBox>
+            </AnimatePresence>
           </VStack>
           <Box
+            zIndex={10}
             borderRadius={4}
             mt={8}
             gridColumnStart={10}
