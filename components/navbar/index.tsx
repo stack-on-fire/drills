@@ -12,9 +12,11 @@ import { signIn, useSession } from "next-auth/react";
 
 import { AccountSwitcher } from "components/account";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 export const Navbar = () => {
   const { data: session, status } = useSession();
+  const router = useRouter();
 
   const signInComponent = session ? (
     <HStack>
@@ -28,11 +30,25 @@ export const Navbar = () => {
       <Box maxW="7xl" mx="auto" py="4" px={{ base: "6", md: "8" }}>
         <HStack spacing="8" justifyContent="space-between" alignItems="center">
           <Box cursor="pointer">
-            <Link href={"/"}>
-              <Text fontSize="2xl" fontWeight="bold">
-                ⚡️ Drills
-              </Text>
-            </Link>
+            <HStack alignItems="center">
+              <Link href={"/"}>
+                <Text fontSize="2xl" fontWeight="bold">
+                  ⚡️ Drills
+                </Text>
+              </Link>{" "}
+              <Link href={"/js"}>
+                <Text
+                  borderBottom={
+                    router.pathname.includes("js") ? "1px solid" : null
+                  }
+                  borderColor="purple.400"
+                  _hover={{ color: "purple.300" }}
+                  fontSize="1xl"
+                >
+                  JavaScript
+                </Text>
+              </Link>
+            </HStack>
           </Box>
           <Box>
             {status === "loading" ? (

@@ -16,6 +16,7 @@ import { Navbar } from "components/navbar";
 
 import { DrillWithHintsAndTestCases } from "types/drill";
 import { DrillCompletion } from "@prisma/client";
+import Features from "components/landing/features";
 
 const Home: NextPage = () => {
   const [visibleHints, setVisibleHints] = useState(0);
@@ -61,6 +62,7 @@ const Home: NextPage = () => {
             </VStack>
           </Center>
         </Flex>
+        <Features />
       </main>
     </div>
   );
