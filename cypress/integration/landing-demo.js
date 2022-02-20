@@ -13,6 +13,7 @@ describe("JS drills", () => {
     cy.get("[data-cy=tester]").should("be.disabled");
   });
   it("can solve the problem", () => {
+    cy.wait(1000);
     cy.get("span").contains(";").click().clear();
     cy.get(".cm-activeLine")
       .click()
