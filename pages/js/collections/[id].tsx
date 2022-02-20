@@ -23,6 +23,17 @@ import { CheckCircleIcon } from "@chakra-ui/icons";
 import { QueryClient, dehydrate } from "react-query";
 import { useCollection } from "hooks/queries/useCollection";
 import { useRouter } from "next/router";
+import { AnimatePresence, motion } from "framer-motion";
+
+const MotionHeading = motion(Heading);
+const MotionText = motion(Text);
+
+const animate = {
+  animate: { opacity: 1, y: 0 },
+  initial: { opacity: 0, y: 10 },
+  exit: { opacity: 0, y: 5 },
+  transition: { duration: 0.3 },
+};
 
 const CollectionView = () => {
   const router = useRouter();
@@ -50,14 +61,27 @@ const CollectionView = () => {
                 {selectedDrill.completion && (
                   <CheckCircleIcon fontSize="2xl" color="green.200" />
                 )}
-                <Heading fontSize="2xl" color="purple.300">
-                  {startCase(selectedDrill.functionName)}
-                </Heading>
+                <AnimatePresence exitBeforeEnter>
+                  <MotionHeading
+                    key={selectedDrill.id}
+                    fontSize="2xl"
+                    color="purple.300"
+                    {...animate}
+                  >
+                    {startCase(selectedDrill.functionName)}
+                  </MotionHeading>
+                </AnimatePresence>
               </HStack>
             </HStack>
-            <Text color="secondary-text">
-              <ReactMarkdown>{selectedDrill.description}</ReactMarkdown>
-            </Text>
+            <AnimatePresence exitBeforeEnter>
+              <MotionText
+                key={selectedDrill.id}
+                color="secondary-text"
+                {...animate}
+              >
+                <ReactMarkdown>{selectedDrill.description}</ReactMarkdown>
+              </MotionText>
+            </AnimatePresence>
             <Hints
               setVisibleHints={setVisibleHints}
               visibleHints={visibleHints}
