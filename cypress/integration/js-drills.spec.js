@@ -1,4 +1,4 @@
-describe("JS drills", () => {
+describe("Landing page test", () => {
   beforeEach(() => {
     cy.visit("http://localhost:3000/js");
   });
